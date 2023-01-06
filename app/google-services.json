@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "21391170544",
+    "project_id": "ergam-a5f1e",
+    "storage_bucket": "ergam-a5f1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21391170544:android:94efeec669eceefb379b35",
+        "android_client_info": {
+          "package_name": "com.example.ergam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21391170544-thbb8oj7gdpi09d78n20on2634jd0fns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa0zbhUdyvNPMtogqZx-25M4hoWbJfW-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21391170544-thbb8oj7gdpi09d78n20on2634jd0fns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
