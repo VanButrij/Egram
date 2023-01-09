@@ -7,10 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.example.ergam.R
-import com.example.ergam.activities.RegisterActivity
 import com.example.ergam.utilits.*
 import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -53,8 +51,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.settings_menu_exit -> {
+                AppStates.updateState(AppStates.OFFLINE)
                 AUTH.signOut()
-                (APP_ACTIVITY).replaceActivity(RegisterActivity())
+                restartActivity()
             }
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
         }

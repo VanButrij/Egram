@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.ergam.R
+import com.example.ergam.ui.fragments.ContactsFragment
 import com.example.ergam.ui.fragments.SettingsFragment
+import com.example.ergam.utilits.APP_ACTIVITY
 import com.example.ergam.utilits.USER
 import com.example.ergam.utilits.downloadAndSetImage
 import com.example.ergam.utilits.replaceFragment
@@ -24,7 +26,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 
-class AppDrawer (val mainActivity:AppCompatActivity,val toolbar: Toolbar){
+class AppDrawer (){
 
     private lateinit var mDrawer: Drawer
     private lateinit var mHeader: AccountHeader
@@ -40,26 +42,26 @@ class AppDrawer (val mainActivity:AppCompatActivity,val toolbar: Toolbar){
 
     fun disableDrawer() {
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
-        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        toolbar.setNavigationOnClickListener {
-            mainActivity.supportFragmentManager.popBackStack()
+        APP_ACTIVITY.mToolbar.setNavigationOnClickListener {
+            APP_ACTIVITY.supportFragmentManager.popBackStack()
         }
     }
 
     fun enableDrawer() {
-        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        toolbar.setNavigationOnClickListener {
+        APP_ACTIVITY.mToolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
         }
     }
 
     private fun createDrawer() {
         mDrawer = DrawerBuilder()
-            .withActivity(mainActivity)
-            .withToolbar(toolbar)
+            .withActivity(APP_ACTIVITY)
+            .withToolbar(APP_ACTIVITY.mToolbar)
             .withActionBarDrawerToggle(true)
             .withSelectedItem(-1)
             .withAccountHeader(mHeader)
@@ -116,13 +118,18 @@ class AppDrawer (val mainActivity:AppCompatActivity,val toolbar: Toolbar){
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    when(position) {
-                        7 ->  mainActivity.replaceFragment(SettingsFragment())
-                    }
+                    clickToItem(position)
                     return false
                 }
             })
             .build()
+    }
+
+    private fun clickToItem(position:Int) {
+        when(position) {
+            4 -> replaceFragment(ContactsFragment())
+            7 ->  replaceFragment(SettingsFragment())
+        }
     }
 
     private fun createHeader() {
@@ -132,7 +139,7 @@ class AppDrawer (val mainActivity:AppCompatActivity,val toolbar: Toolbar){
             .withIcon(USER.photoUrl)
             .withIdentifier(200)
         mHeader = AccountHeaderBuilder()
-            .withActivity(mainActivity)
+            .withActivity(APP_ACTIVITY)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
                 mCurrentProfile

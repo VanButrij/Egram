@@ -1,28 +1,26 @@
 package com.example.ergam
 
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
-import com.example.ergam.activities.RegisterActivity
+import androidx.core.content.ContextCompat
 import com.example.ergam.databinding.ActivityMainBinding
-import com.example.ergam.models.User
-import com.example.ergam.ui.fragments.ChatsFragment
+import com.example.ergam.ui.fragments.MainFragment
+import com.example.ergam.ui.fragments.register.EnterPhoneNumberFragment
 import com.example.ergam.ui.objects.AppDrawer
 import com.example.ergam.utilits.*
-import com.google.firebase.storage.StorageReference
-import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     lateinit var mAppDrawer: AppDrawer
-    private lateinit var mToolbar: Toolbar
+    lateinit var mToolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         APP_ACTIVITY = this
         initFirebase()
         initUser{
+            CoroutineScope(Dispatchers.IO).launch {
+                initContacts()
+            }
             initFields()
             initFunc()
         }
@@ -46,20 +47,31 @@ class MainActivity : AppCompatActivity() {
         AppStates.updateState(AppStates.OFFLINE)
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (ContextCompat.checkSelfPermission(APP_ACTIVITY, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            initContacts()
+        }
+    }
+
     private fun initFunc() {
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
-            setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
     }
 
 
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
-        mAppDrawer = AppDrawer(this, mToolbar)
+        mAppDrawer = AppDrawer()
     }
 
 

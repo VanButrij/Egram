@@ -1,15 +1,10 @@
-package com.example.ergam.ui.fragments
+package com.example.ergam.ui.fragments.register
 
 import androidx.fragment.app.Fragment
 import com.example.ergam.MainActivity
 import com.example.ergam.R
-import com.example.ergam.activities.RegisterActivity
-import com.example.ergam.utilits.AUTH
-import com.example.ergam.utilits.replaceActivity
-import com.example.ergam.utilits.replaceFragment
-import com.example.ergam.utilits.showToast
+import com.example.ergam.utilits.*
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_phone_number.*
@@ -28,7 +23,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                 AUTH.signInWithCredential(credential).addOnCompleteListener {
                     if (it.isSuccessful){
                         showToast(getString(R.string.register_greetings))
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                        restartActivity()
                     } else showToast(it.exception?.message.toString())
                 }
             }
@@ -60,7 +55,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
             mPhoneNumber,
             60,
             TimeUnit.SECONDS,
-            activity as RegisterActivity,
+            APP_ACTIVITY,
             mCallback
         )
     }
