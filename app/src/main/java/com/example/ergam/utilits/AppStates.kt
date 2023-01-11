@@ -1,5 +1,7 @@
 package com.example.ergam.utilits
 
+import com.example.ergam.database.*
+
 enum class AppStates(val state:String) {
     ONLINE("в сети"),
     OFFLINE("был недавно"),

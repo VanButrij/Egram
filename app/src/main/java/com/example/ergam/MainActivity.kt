@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.example.ergam.database.AUTH
+import com.example.ergam.database.initFirebase
+import com.example.ergam.database.initUser
 import com.example.ergam.databinding.ActivityMainBinding
-import com.example.ergam.ui.fragments.MainFragment
-import com.example.ergam.ui.fragments.register.EnterPhoneNumberFragment
+import com.example.ergam.ui.screens.MainFragment
+import com.example.ergam.ui.screens.register.EnterPhoneNumberFragment
 import com.example.ergam.ui.objects.AppDrawer
 import com.example.ergam.utilits.*
 import kotlinx.coroutines.CoroutineScope
