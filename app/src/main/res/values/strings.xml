@@ -28,4 +28,22 @@
     <string name="settings_hint_input_username">username</string>
     <string name="settings_input_bio">bio</string>
     <string name="toast_empy_message">Необходимо ввести сообщение</string>
+    <string name="app_title">Ergan</string>
+    <string name="clear_chat">Очистить чат</string>
+    <string name="delete_chat">Удалить чат</string>
+    <string name="chat_deleted">Чат удалён</string>
+    <string name="chat_cleared">Чат очищен</string>
+    <string name="chat_is_empty">Чат пуст</string>
+    <string name="add_participant">Добавить участника</string>
+    <string name="create_group">Создать группу</string>
+    <string name="list_contacts_is_empty">Добавьте участника</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="auth">Вход</string>
+
+    <plurals name="count_members">
+        <item quantity="one">%d участник</item>
+        <item quantity="few">%d участника</item>
+        <item quantity="many">%d участников</item>
+        <item quantity="other">%d участников</item>
+    </plurals>
 </resources>

@@ -17,6 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +43,10 @@ dependencies {
     def lifecycle_version = "2.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "com.mikepenz:materialdrawer:7.0.0"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -51,6 +56,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
+
+
     implementation "com.mikepenz:materialdrawer-nav:7.0.0"
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -59,5 +66,9 @@ dependencies {
 
     implementation 'com.firebaseui:firebase-ui-database:8.0.2'
 
+    implementation 'net.openid:appauth:0.9.1'
+
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6'
 }

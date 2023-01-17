@@ -17,9 +17,16 @@ const val NODE_MESSAGES = "messages"
 const val NODE_USERNAMES = "usernames"
 const val NODE_PHONES = "phones"
 const val NODE_PHONES_CONTACTS = "phones_contacts"
+const val NODE_MAIN_LIST = "main_list"
+const val NODE_GROUPS = "groups"
+const val NODE_MEMBERS = "members"
+
+const val FOLDER_GROUPS_IMAGE = "groups_image"
 const val FOLDER_PROFILE_IMAGE = "profile_image"
 const val FOLDER_FILES = "messages_files"
+
 const val TYPE_TEXT = "text"
+
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
 const val CHILD_USERNAME = "username"
@@ -32,25 +39,8 @@ const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
 const val CHILD_FILE_URL = "fileUrl"
-fun sendMessageAsFile(receivingUserID: String, fileUrl: String, messageKey: String, typeMessage: String, filename: String) {
 
-   val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
-   val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
+const val USER_CREATOR = "creator"
+const val USER_ADMIN = "admin"
+const val USER_MEMBER = "member"
 
-   val mapMessage = hashMapOf<String, Any>()
-   mapMessage[CHILD_FROM] = CURRENT_UID
-   mapMessage[CHILD_TYPE] = typeMessage
-   mapMessage[CHILD_ID] = messageKey
-   mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
-   mapMessage[CHILD_FILE_URL] = fileUrl
-   mapMessage[CHILD_TEXT] = filename
-
-   val mapDialog = hashMapOf<String, Any>()
-   mapDialog["$refDialogUser/$messageKey"] = mapMessage
-   mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
-
-   REF_DATABASE_ROOT
-       .updateChildren(mapDialog)
-       .addOnFailureListener { showToast(it.message.toString()) }
-
-}

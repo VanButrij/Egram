@@ -1,11 +1,9 @@
 package com.example.ergam.ui.screens.single_chat
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.widget.AbsListView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +13,9 @@ import com.example.ergam.R
 import com.example.ergam.database.*
 import com.example.ergam.models.CommonModel
 import com.example.ergam.models.UserModel
-import com.example.ergam.ui.screens.BaseFragment
+import com.example.ergam.ui.screens.base.BaseFragment
 import com.example.ergam.ui.message_recycler_view.views.AppViewFactory
+import com.example.ergam.ui.screens.main_list.MainListFragment
 import com.example.ergam.utilits.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.database.DatabaseReference
@@ -58,6 +57,7 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        setHasOptionsMenu(true)
         mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet_choice)
         mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         mAppVoiceRecorder = AppVoiceRecorder()
@@ -83,7 +83,6 @@ class SingleChatFragment(private val contact: CommonModel) :
             chat_btn_voice.setOnTouchListener { v, event ->
                 if (checkPermission(RECORD_AUDIO)) {
                     if (event.action == MotionEvent.ACTION_DOWN) {
-                        //TODO RECORD
                         chat_input_message.setText("Запись")
                         chat_btn_voice.setColorFilter(
                             ContextCompat.getColor(
@@ -94,7 +93,6 @@ class SingleChatFragment(private val contact: CommonModel) :
                         val messageKey = getMessageKey(contact.id)
                         mAppVoiceRecorder.startRecord(messageKey)
                     } else if (event.action == MotionEvent.ACTION_UP) {
-                        //TODO STOP RECORD
                         chat_input_message.setText("")
                         chat_btn_voice.colorFilter = null
                         mAppVoiceRecorder.stopRecord { file, messageKey ->
@@ -228,6 +226,7 @@ class SingleChatFragment(private val contact: CommonModel) :
                 showToast(getString(R.string.toast_empy_message))
             } else {
                 sendMessage(message, contact.id, TYPE_TEXT) {
+                    saveToMainList(contact.id, TYPE_CHAT)
                     chat_input_message.setText("")
                 }
             }
@@ -256,6 +255,24 @@ class SingleChatFragment(private val contact: CommonModel) :
         super.onDestroyView()
         mAppVoiceRecorder.releaseRecorder()
         mAdapter.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        activity?.menuInflater?.inflate(R.menu.single_chat_action_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_clear_chat -> clearChat(contact.id){
+                showToast(getString(R.string.chat_cleared))
+                replaceFragment(MainListFragment())
+            }
+            R.id.menu_delete_chat -> deleteChat(contact.id){
+                showToast(getString(R.string.chat_deleted))
+                replaceFragment(MainListFragment())
+            }
+        }
+        return true
     }
 
 }

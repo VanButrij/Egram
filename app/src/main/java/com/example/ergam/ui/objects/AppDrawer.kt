@@ -6,10 +6,11 @@ import android.view.View
 import android.widget.ImageView
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.ergam.R
-import com.example.ergam.ui.screens.ContactsFragment
-import com.example.ergam.ui.screens.SettingsFragment
+import com.example.ergam.ui.screens.contacts.ContactsFragment
+import com.example.ergam.ui.screens.settings.SettingsFragment
 import com.example.ergam.utilits.APP_ACTIVITY
 import com.example.ergam.database.USER
+import com.example.ergam.ui.screens.groups.AddContactsFragment
 import com.example.ergam.utilits.downloadAndSetImage
 import com.example.ergam.utilits.replaceFragment
 import com.mikepenz.materialdrawer.AccountHeader
@@ -124,6 +125,7 @@ class AppDrawer (){
 
     private fun clickToItem(position:Int) {
         when(position) {
+            1 -> replaceFragment(AddContactsFragment())
             4 -> replaceFragment(ContactsFragment())
             7 ->  replaceFragment(SettingsFragment())
         }
